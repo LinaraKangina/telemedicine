@@ -11,4 +11,11 @@ ALTER TABLE authorization_data
 ALTER COLUMN user_id
 SET DEFAULT NEXTVAL('authorization_data_user_id_seq');
 
-
+В помнике
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.3.6</version>
+        </dependency>
+		
+		предварительно jar postgresql-42.3.6.jar скачала и положила в папку C:\Program Files\Java\jre1.8.0_291\lib

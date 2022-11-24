@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class User {
 
-    private int userID;
+    private static int userID;
     private String userLogin;
     private String userPassword;
     private int userRole;
@@ -29,33 +29,73 @@ public class User {
         this.userRole = userRole;
     }
 
-    public int getUserID() { return userID;}
+    public int getUserID() {
+        return userID;
+    }
 
-    public void setUserID() { this.userID = userID; }
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
 
-    public String getUserLogin() { return userLogin;}
+    public String getUserLogin() {
+        return userLogin;
+    }
 
-    public void setUserLogin() { this.userPassword = userLogin; }
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
 
-    public String getUserPassword() { return userPassword;}
+    public String getUserPassword() {
+        return userPassword;
+    }
 
-    public void setUserPassword() { this.userPassword = userPassword; }
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
 
-    public int getUserRole() { return userRole;}
+    public int getUserRole() {
+        return userRole;
+    }
 
-    public void setUserRole() { this.userRole = userRole; }
+    public void setUserRole(int userRole) {
+        this.userRole = userRole;
+    }
+
+    public DBWoker getWorker() {
+        return worker;
+    }
+
+    public void setWorker(DBWoker worker) {
+        this.worker = worker;
+    }
+
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", userLogin='" + userLogin + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userRole=" + userRole +
+                '}' + '\'';
+    }
 
     DBWoker worker = new DBWoker();
     Scanner scanner = new Scanner(System.in);
 
-    public void logIn() throws SQLException {
+    public void logIn() {
 
         String query = "SELECT * FROM app.authorization_data WHERE (user_login = ? AND user_password = ?)";
 
 
-        try {
-            PreparedStatement preparedStatement = worker.getConnection().prepareStatement(query);
-
+        try (PreparedStatement preparedStatement = worker.getConnection().prepareStatement(query)){
             ResultSet resultSet;
 
                 do {
@@ -77,13 +117,11 @@ public class User {
         }
     }
 
-    public int userRoleDefinition () throws SQLException {
+    public int userRoleDefinition () {
 
         String query = "SELECT user_role FROM app.authorization_data WHERE (user_login = ?)";
 
-        try {
-            PreparedStatement preparedStatement = worker.getConnection().prepareStatement(query);
-
+        try (PreparedStatement preparedStatement = worker.getConnection().prepareStatement(query)) {
             ResultSet resultSet;
 
             userLogin = getUserLogin();
@@ -97,28 +135,6 @@ public class User {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
         return getUserRole();
-    }
-
-    public void newLogInData() {
-
-        String query = "insert into app.authorization_data (user_login, user_password, user_role) VALUES (?, ?, ?)";
-
-        System.out.print("Введите логин: ");
-        String registrationLogin = scanner.nextLine();
-        System.out.print("Введите пароль: ");
-        String registrationPassword = scanner.nextLine();
-
-        try {
-            PreparedStatement preparedStatement  = worker.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, registrationLogin);
-            preparedStatement.setString(2, registrationPassword);
-            preparedStatement.setInt(3, 4);
-
-            preparedStatement.execute();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
     }
 }

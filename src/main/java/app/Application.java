@@ -1,19 +1,24 @@
 package app;
 
+import api.CRUDUtils;
 import api.User;
 import classes.Laborant;
 import classes.Registrator;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 
 public class Application {
-    public static void main(String[] args) throws SQLException, IOException, ParseException {
+    public static void main(String[] args) throws ParseException {
 
         User user = new User();
         Registrator registrator = new Registrator();
         Laborant laborant = new Laborant();
+
+        List<User> users = CRUDUtils.getUserData("SELECT * FROM app.authorization_data");
+        System.out.println(users);
+
+
 
         System.out.println("Вход с систему");
         user.logIn(); // авторизация пользователя в систему
@@ -37,6 +42,7 @@ public class Application {
             default:
                 break;
         }
+
 
 
     }
