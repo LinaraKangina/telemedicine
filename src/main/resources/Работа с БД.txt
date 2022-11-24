@@ -1,0 +1,14 @@
+Делаю поле id автоинкрементным
+
+create sequence authorization_data_user_id_seq
+START WITH 1000007
+INCREMENT BY 1
+NO MINVALUE
+NO MAXVALUE
+CACHE 1;
+
+ALTER TABLE authorization_data
+ALTER COLUMN user_id
+SET DEFAULT NEXTVAL('authorization_data_user_id_seq');
+
+
