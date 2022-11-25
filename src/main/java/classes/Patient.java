@@ -173,4 +173,12 @@ public class Patient {
     Scanner scanner = new Scanner(System.in);
     DBWoker worker = new DBWoker();
 
+
+    public void selectAction (){
+        System.out.println("\n Выберите, что хотите сделать:");
+        System.out.println(" -получить уведомления (введите 1) \n -получить результаты анализов (введите 2) \n -внести данные (введите 3)");
+
+    }
 }
+
+

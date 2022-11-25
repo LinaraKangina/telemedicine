@@ -3,6 +3,7 @@ package app;
 import api.CRUDUtils;
 import api.User;
 import classes.Laborant;
+import classes.Patient;
 import classes.Registrator;
 
 import java.text.ParseException;
@@ -14,6 +15,7 @@ public class Application {
         User user = new User();
         Registrator registrator = new Registrator();
         Laborant laborant = new Laborant();
+        Patient patient = new Patient();
 
         List<User> users = CRUDUtils.getUserData("SELECT * FROM app.authorization_data");
         System.out.println(users);
@@ -37,7 +39,7 @@ public class Application {
                 System.out.println("Это врач");
                 break;
             case (4):
-                System.out.println("Это пациент");
+                patient.selectAction();
                 break;
             default:
                 break;

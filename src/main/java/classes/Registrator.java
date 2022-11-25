@@ -78,25 +78,23 @@ public class Registrator{
         try {
             PreparedStatement preparedStatement = worker.getConnection().prepareStatement(query);
             // Генерация логина: логин = номер телефона без +7 (например, если телефон +79047697711, то логин 9047697711)
-            String patientLogin = patient.getTelephoneNumber().substring(2);
+            user.setUserLogin(patient.getTelephoneNumber().substring(2));
 
             // Генерация пароля (8 знаков, буквенно-цифровой)
-            String patientPassword;
             // Диапазон ASCII – буквенно-цифровой (0-9, a-z, A-Z)
             final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
             SecureRandom random = new SecureRandom();
 
-            //каждая итерация цикла случайным образом выбирает символ из заданного диапазона ASCII и добавляет его к экземпляру StringBuilder.
-            patientPassword = IntStream.range(0, 8)
+            //каждая итерация цикла случайным образом выбирает символ из заданного диапазона и добавляет его к экземпляру StringBuilder.
+            user.setUserPassword(IntStream.range(0, 8)
                     .map(i -> random.nextInt(chars.length()))
                     .mapToObj(randomIndex -> String.valueOf(chars.charAt(randomIndex)))
-                    .collect(Collectors.joining());
-
+                    .collect(Collectors.joining()));
 
             preparedStatement.setInt(1, user.getUserID());
-            preparedStatement.setString(2, patientLogin);
-            preparedStatement.setString(3, patientPassword);
+            preparedStatement.setString(2, user.getUserLogin());
+            preparedStatement.setString(3, user.getUserPassword());
 
             preparedStatement.execute();
         }
@@ -106,8 +104,6 @@ public class Registrator{
     }
 
     public void givesLoginPasswordToUser (){
-        String userLogin = "Логин";
-        String userPassword = "Пароль";
 
         String query = "SELECT user_login, user_password FROM app.authorization_data where user_id = ?";
 
@@ -119,12 +115,12 @@ public class Registrator{
             resultSet= preparedStatement.executeQuery();
 
             while (resultSet.next()){
-                userLogin = resultSet.getString ("user_login");
-                userPassword = resultSet.getString ("user_password");
+                user.setUserLogin(resultSet.getString ("user_login"));
+                user.setUserPassword(resultSet.getString ("user_password"));
             }
             System.out.println("\nРасчпечатайте данные для авторизации и передайте пациенту:\n"); //TODO реализовать отправку логина+пароля на e-mail
-            System.out.println("Логин: "+ userLogin);
-            System.out.println("Логин: "+ userPassword);
+            System.out.println("Логин: "+ user.getUserLogin());
+            System.out.println("Пароль: "+ user.getUserPassword());
 
         } catch (SQLException e){
             e.printStackTrace();

@@ -5,6 +5,8 @@ import api.DBWoker;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Laborant {
@@ -12,20 +14,16 @@ public class Laborant {
     Scanner scanner = new Scanner(System.in);
     DBWoker worker = new DBWoker();
 
-    private int userId;
+    Patient patient = new Patient();
+    List<Patient> patients = new ArrayList<>();
+
     public void openPatientCard (){
 
         int numberOfLines = 0;
 
-        String patientSurname;
-        String patientName = "";
-        String patientPatronymic = "";
-        String patientTelephone= "";
-
         System.out.println("\nОткрыть карточку пациента\n");
         System.out.print("Введите фамилию: ");
-        patientSurname = scanner.nextLine();
-        
+        patient.setSurname(scanner.nextLine());
 
         String query1 = "SELECT count(*) FROM app.patient_сard_regdata where surname = ?";
         String query2 = "SELECT count(*) FROM app.patient_сard_regdata where surname = ? and \"name\" = ?";
@@ -56,7 +54,7 @@ public class Laborant {
             ResultSet resultSet33;
             ResultSet resultSet44;
 
-            ps1.setString(1, patientSurname);
+            ps1.setString(1, patient.getSurname());
 
             resultSet1 = ps1.executeQuery();
 
@@ -73,10 +71,10 @@ public class Laborant {
             } else
             if (numberOfLines > 1){
                 System.out.print("Введите имя: ");
-                patientName = scanner.nextLine();
+                patient.setName(scanner.nextLine());
 
-                ps2.setString(1, patientSurname);
-                ps2.setString(2, patientName);
+                ps2.setString(1, patient.getSurname());
+                ps2.setString(2, patient.getName());
 
                 resultSet2 = ps2.executeQuery();
                 while (resultSet2.next()){
@@ -84,11 +82,11 @@ public class Laborant {
                 }
                 if (numberOfLines > 1) {
                     System.out.print("Введите отчество: ");
-                    patientPatronymic = scanner.nextLine();
+                    patient.setPatronymic(scanner.nextLine());
 
-                    ps3.setString(1, patientSurname);
-                    ps3.setString(2, patientName);
-                    ps3.setString(3, patientPatronymic);
+                    ps3.setString(1, patient.getSurname());
+                    ps3.setString(2, patient.getName());
+                    ps3.setString(3, patient.getPatronymic());
 
                     resultSet3 = ps3.executeQuery();
                     while (resultSet3.next()) {
@@ -96,26 +94,24 @@ public class Laborant {
                     }
                     if (numberOfLines > 1) {
                         System.out.print("Введите номер телефона: +7");
-                        patientTelephone = "+7"+scanner.nextLine();
+                        patient.setTelephoneNumber("+7"+scanner.nextLine());
 
-                        ps4.setString(1, patientSurname);
-                        ps4.setString(2, patientName);
-                        ps4.setString(3, patientPatronymic);
-                        ps4.setString(4, patientTelephone);
+                        ps4.setString(1, patient.getSurname());
+                        ps4.setString(2, patient.getName());
+                        ps4.setString(3, patient.getPatronymic());
+                        ps4.setString(4, patient.getTelephoneNumber());
 
                         resultSet4 = ps4.executeQuery();
                         while (resultSet4.next()) {
                             numberOfLines = resultSet4.getInt(1);
                         }
-                        System.out.println(patientTelephone);
+                        System.out.println(patient.getTelephoneNumber());
                     }
                 }
-
             }
 
 
             System.out.println(numberOfLines);
-
         } catch (SQLException e){
             e.printStackTrace();
         }
