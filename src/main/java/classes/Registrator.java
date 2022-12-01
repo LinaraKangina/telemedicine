@@ -17,7 +17,6 @@ import java.util.stream.IntStream;
 
 public class Registrator{
 
-
     DBWoker worker;
     Scanner scanner = new Scanner(System.in);
 
@@ -74,7 +73,7 @@ public class Registrator{
 
     // Заводим логин/пароль пациенту
     public void generateUserLoginPassword (){
-        String query = "insert into app.authorization_data (user_id, user_login, user_password, user_role) VALUES (?, ?, ?, 4)";
+        String query = "INSERT INTO app.authorization_data (user_id, user_login, user_password, user_role) VALUES (?, ?, ?, 4)";
         try {
             PreparedStatement preparedStatement = worker.getConnection().prepareStatement(query);
             // Генерация логина: логин = номер телефона без +7 (например, если телефон +79047697711, то логин 9047697711)

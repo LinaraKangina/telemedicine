@@ -34,6 +34,7 @@ public class Application {
                 break;
             case (2):
                 laborant.openPatientCard();
+                laborant.inputTestResults();
                 break;
             case (3):
                 System.out.println("Это врач");
