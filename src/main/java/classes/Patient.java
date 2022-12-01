@@ -7,11 +7,6 @@ import java.sql.Date;
 import java.util.Scanner;
 
 public class Patient {
-    private int userID;
-    private String userLogin;
-    private String userPassword;
-    private int userRole;
-
     private int patientId;
     private String surname;
     private String name;
@@ -25,36 +20,15 @@ public class Patient {
     private double height;
     private double weight;
 
-    public int getUserID() {
-        return userID;
+    public Patient(String surname, String name, String patronymic, Date patientBirthdate, String telephoneNumber) {
+        this.surname = surname;
+        this.name = name;
+        this.patronymic = patronymic;
+        this.patientBirthdate = patientBirthdate;
+        this.telephoneNumber = telephoneNumber;
     }
+    public Patient (){
 
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public String getUserLogin() {
-        return userLogin;
-    }
-
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
-
-    public int getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(int userRole) {
-        this.userRole = userRole;
     }
 
     public int getPatientId() {
