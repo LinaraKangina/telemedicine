@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBWoker {
+public class DBWorker {
     private static final String url = "jdbc:postgresql://localhost:5432/appfl";
     private static final String userDb = "postgres";
     private static final String passwordDb = "postgres";

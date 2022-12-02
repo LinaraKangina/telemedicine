@@ -1,29 +1,28 @@
 package app;
 
-import api.CRUDUtils;
 import api.User;
+import classes.Doctor;
 import classes.Laborant;
 import classes.Patient;
 import classes.Registrator;
 
+import java.io.IOException;
 import java.text.ParseException;
-import java.util.List;
 
 public class Application {
-    public static void main(String[] args) throws ParseException {
+
+    public static void main(String[] args) throws ParseException, IOException {
+
 
         User user = new User();
         Registrator registrator = new Registrator();
         Laborant laborant = new Laborant();
         Patient patient = new Patient();
-
-        List<User> users = CRUDUtils.getUserData("SELECT * FROM app.authorization_data");
-        System.out.println(users);
-
-
+        Doctor doctor = new Doctor();
 
         System.out.println("Вход с систему");
         user.logIn(); // авторизация пользователя в систему
+
 
         //есть 4 вида пользователей. 1 - регистратор, 2 - лаборант, 3 - врач, 4 - пациент
         switch (user.userRoleDefinition()) {
@@ -31,16 +30,17 @@ public class Application {
                 registrator.registerUser(); //
                 registrator.generateUserLoginPassword();
                 registrator.givesLoginPasswordToUser();
+                System.out.println("\nНаправьте пациента к врачу");
                 break;
             case (2):
                 laborant.openPatientCard();
                 laborant.inputTestResults();
                 break;
             case (3):
-                System.out.println("Это врач");
+                doctor.doctorsArm(user.userIDDefinition());
                 break;
             case (4):
-                patient.selectAction();
+                patient.patientsArm(user.userIDDefinition());
                 break;
             default:
                 break;

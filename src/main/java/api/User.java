@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class User {
 
-    private static int userID;
+    private int userID;
     private String userLogin;
     private String userPassword;
     private int userRole;
@@ -61,11 +61,11 @@ public class User {
         this.userRole = userRole;
     }
 
-    public DBWoker getWorker() {
+    public DBWorker getWorker() {
         return worker;
     }
 
-    public void setWorker(DBWoker worker) {
+    public void setWorker(DBWorker worker) {
         this.worker = worker;
     }
 
@@ -87,13 +87,12 @@ public class User {
                 '}' + '\'';
     }
 
-    DBWoker worker = new DBWoker();
+    DBWorker worker = new DBWorker();
     Scanner scanner = new Scanner(System.in);
 
     public void logIn() {
 
         String query = "SELECT * FROM app.authorization_data WHERE (user_login = ? AND user_password = ?)";
-
 
         try (PreparedStatement preparedStatement = worker.getConnection().prepareStatement(query)){
             ResultSet resultSet;
@@ -136,5 +135,26 @@ public class User {
             e.printStackTrace();
         }
         return getUserRole();
+    }
+
+    public int userIDDefinition () {
+
+        String query = "SELECT user_id FROM app.authorization_data WHERE user_login = ?";
+
+        try (PreparedStatement preparedStatement = worker.getConnection().prepareStatement(query)) {
+            ResultSet resultSet;
+
+            userLogin = getUserLogin();
+            preparedStatement.setString(1, userLogin);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                userID = resultSet.getInt(1);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userID;
     }
 }

@@ -1,6 +1,6 @@
 package classes;
 
-import api.DBWoker;
+import api.DBWorker;
 import api.User;
 
 import java.security.SecureRandom;
@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 
 public class Registrator{
 
-    DBWoker worker;
+    DBWorker worker;
     Scanner scanner = new Scanner(System.in);
 
     User user = new User();
@@ -77,7 +77,7 @@ public class Registrator{
         try {
             PreparedStatement preparedStatement = worker.getConnection().prepareStatement(query);
             // Генерация логина: логин = номер телефона без +7 (например, если телефон +79047697711, то логин 9047697711)
-            user.setUserLogin(patient.getTelephoneNumber().substring(2));
+            user.setUserLogin(patient.getTelephoneNumber().substring(2)); //TODO сделать проверку на уникальность логина
 
             // Генерация пароля (8 знаков, буквенно-цифровой)
             // Диапазон ASCII – буквенно-цифровой (0-9, a-z, A-Z)
@@ -103,7 +103,6 @@ public class Registrator{
     }
 
     public void givesLoginPasswordToUser (){
-
         String query = "SELECT user_login, user_password FROM app.authorization_data where user_id = ?";
 
         try {
@@ -118,8 +117,10 @@ public class Registrator{
                 user.setUserPassword(resultSet.getString ("user_password"));
             }
             System.out.println("\nРасчпечатайте данные для авторизации и передайте пациенту:\n"); //TODO реализовать отправку логина+пароля на e-mail
+            System.out.println("_______________________");
             System.out.println("Логин: "+ user.getUserLogin());
             System.out.println("Пароль: "+ user.getUserPassword());
+            System.out.println("-----------------------");
 
         } catch (SQLException e){
             e.printStackTrace();
