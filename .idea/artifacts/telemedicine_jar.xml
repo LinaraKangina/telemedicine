@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="telemedicine:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/telemedicine_jar</output-path>
+    <root id="archive" name="telemedicine.jar">
+      <element id="module-output" name="telemedicine" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/checkerframework/checker-qual/3.5.0/checker-qual-3.5.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/postgresql/postgresql/42.3.6/postgresql-42.3.6.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
